@@ -62,13 +62,13 @@ where `ldes-fragment.json-ld` is your fragment file located in the current worki
 
 ## Create an alias
 
-Although it does not matter with which fragment you start retrieving a LDES data set, typically it can be retrieved from a 'starting point', e.g. in case of a time-based fragmentation this is the oldest fragment. For this and similar reasons you can alias a fragment with a more human-friendly path. The simulator allows to define an alias for a fragment, resulting in a HTTP redirect to the original fragment. The simulator provides a `/redirect` endpoint to which you can `POST` your alias information with the body containg a json like:
+Although it does not matter with which fragment you start retrieving a LDES data set, typically it can be retrieved from a 'starting point', e.g. in case of a time-based fragmentation this is the oldest fragment. For this and similar reasons you can alias a fragment with a more human-friendly path. The simulator allows to define an alias for a fragment, resulting in a HTTP redirect to the original fragment. The simulator provides an `/alias` endpoint to which you can `POST` your alias information with the body containg a json like:
 ```json
 {"original":"<fragment-url>", "alias":"<alias-url>"}
 ```
 To create an alias for a fragment from the (bash) command line using curl:
 ```bash
-curl -X POST http://localhost:8080/redirect -H "Content-Type: application/json" -d '{"original": "https://private-api.gipod.beta-vlaanderen.be/api/v1/ldes/mobility-hindrances?generatedAtTime=2020-12-28T09:36:09.72Z", "alias": "https://private-api.gipod.beta-vlaanderen.be/api/v1/ldes/mobility-hindrances"}'
+curl -X POST http://localhost:8080/alias -H "Content-Type: application/json" -d '{"original": "https://private-api.gipod.beta-vlaanderen.be/api/v1/ldes/mobility-hindrances?generatedAtTime=2020-12-28T09:36:09.72Z", "alias": "https://private-api.gipod.beta-vlaanderen.be/api/v1/ldes/mobility-hindrances"}'
 ```
 and the simulator will respond with:
 ```json
