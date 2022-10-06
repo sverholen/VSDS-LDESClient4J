@@ -11,11 +11,24 @@
 ### Local application files
 ###
 **/application-local.yml
+*.user
+*.local*
 
 ###
 ### Makefiles
 ###
 .makefiles
+
+###
+### NIFI
+###
+nifi/
+
+###
+### LOG FILES
+###
+*.log
+logs/
 
 
 ###############################################################################
