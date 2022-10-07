@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>be.vlaanderen.informatievlaanderen</groupId>
+    <artifactId>ldes-client</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <!-- Java properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Maven properties -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
+
+        <!-- Jena -->
+        <apache-jena.version>4.6.1</apache-jena.version>
+
+        <!-- Json -->
+        <jakarta-json.version>2.0.1</jakarta-json.version>
+        <jayway.version>2.7.0</jayway.version>
+
+        <!-- Testing -->
+        <nifi-mock.version>1.17.0</nifi-mock.version>
+        <junit-jupiter.version>5.9.1</junit-jupiter.version>
+        <mockito.version>4.8.0</mockito.version>
+        <wiremock-jre8.version>2.34.0</wiremock-jre8.version>
+		<awaitility.version>4.2.0</awaitility.version>
+
+        <!-- CODE FORMATTER -->
+        <formatter-maven-plugin.version>2.20.0</formatter-maven-plugin.version>
+        <skipFormatCode>false</skipFormatCode>
+    </properties>
+    
+    <dependencyManagement>
+    	<dependencies>
+    		<!-- Jena -->
+            <dependency>
+                <groupId>org.apache.jena</groupId>
+                <artifactId>jena-arq</artifactId>
+                <version>${apache-jena.version}</version>
+            </dependency>
+			<dependency>
+				<groupId>org.apache.jena</groupId>
+				<artifactId>jena-geosparql</artifactId>
+				<version>${apache-jena.version}</version>
+			</dependency>
+    	
+	        <!-- JSON -->
+	        <dependency>
+	            <groupId>org.glassfish</groupId>
+	            <artifactId>jakarta.json</artifactId>
+	            <version>${jakarta-json.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>com.jayway.jsonpath</groupId>
+	            <artifactId>json-path</artifactId>
+	            <version>${jayway.version}</version>
+	        </dependency>
+
+            <!-- Test Dependencies -->
+            <dependency>
+                <groupId>org.apache.nifi</groupId>
+                <artifactId>nifi-mock</artifactId>
+                <version>${nifi-mock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock-jre8</artifactId>
+                <version>${wiremock-jre8.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${awaitility.version}</version>
+                <scope>test</scope>
+            </dependency>
+		</dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+		<!-- Jena -->
+        <dependency>
+        	<groupId>org.apache.jena</groupId>
+        	<artifactId>jena-arq</artifactId>
+        </dependency>
+        
+        <!-- JSON -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.json</artifactId>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+        </dependency>
+        <dependency>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+    	<pluginManagement>
+    		<plugins>
+    			<!-- Maven -->
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-surefire-plugin</artifactId>
+	                <version>${maven-surefire-plugin.version}</version>
+	            </plugin>
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-failsafe-plugin</artifactId>
+	                <version>${maven-failsafe-plugin.version}</version>
+	            </plugin>
+	            
+                <!-- Code formatter -->
+                <plugin>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>${formatter-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>validate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <skipFormat>${skipFormatCode}</skipFormat>
+                        <encoding>UTF-8</encoding>
+                        <configFile>${maven.multiModuleProjectDirectory}/formatter.xml</configFile>
+                    </configuration>
+                </plugin>
+    		</plugins>
+    	</pluginManagement>
+    	
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/Informatievlaanderen/VSDS-LDESClient4J</url>
+        </repository>
+    </distributionManagement>
+</project>
