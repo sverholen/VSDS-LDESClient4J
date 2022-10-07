@@ -20,5 +20,5 @@ jobs:
           java-version: 17
       - name: Deploy LDES Client SDK Maven packages to GitHub registry
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: mvn deploy
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B deploy
