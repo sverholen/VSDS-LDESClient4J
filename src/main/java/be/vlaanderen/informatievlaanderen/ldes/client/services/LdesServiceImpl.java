@@ -24,12 +24,12 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StatementTripleBoundary;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFLanguages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import be.vlaanderen.informatievlaanderen.ldes.client.LdesClientImplFactory;
 import be.vlaanderen.informatievlaanderen.ldes.client.LdesStateManager;
+import be.vlaanderen.informatievlaanderen.ldes.client.converters.LangConverter;
 import be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesFragment;
 import be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesMember;
 
@@ -54,7 +54,7 @@ public class LdesServiceImpl implements LdesService {
 	 *            JSONLD11, N-QUADS)
 	 */
 	public LdesServiceImpl() {
-		this(RDFLanguages.nameToLang(DEFAULT_DATA_SOURCE_FORMAT));
+		this(LangConverter.convertToLang(DEFAULT_DATA_SOURCE_FORMAT));
 	}
 
 	public LdesServiceImpl(Lang dataSourceFormat) {
@@ -79,7 +79,7 @@ public class LdesServiceImpl implements LdesService {
 	 */
 	public LdesServiceImpl(Lang dataSourceFormat, Long fragmentExpirationInterval) {
 		if (dataSourceFormat == null) {
-			dataSourceFormat = RDFLanguages.nameToLang(DEFAULT_DATA_SOURCE_FORMAT);
+			dataSourceFormat = LangConverter.convertToLang(DEFAULT_DATA_SOURCE_FORMAT);
 		}
 		if (fragmentExpirationInterval == null || fragmentExpirationInterval <= 0L) {
 			fragmentExpirationInterval = Long.parseLong(DEFAULT_FRAGMENT_EXPIRATION_INTERVAL);
