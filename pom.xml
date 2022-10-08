@@ -18,7 +18,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
-		    <pmd-plugin.version>3.19.0</pmd-plugin.version>
+		<pmd-plugin.version>3.19.0</pmd-plugin.version>
         <unittestskip>false</unittestskip>
         <integrationtestskip>false</integrationtestskip>
 
@@ -34,9 +34,9 @@
         <junit-jupiter.version>5.9.1</junit-jupiter.version>
         <mockito.version>4.8.0</mockito.version>
         <wiremock-jre8.version>2.34.0</wiremock-jre8.version>
-		    <awaitility.version>4.2.0</awaitility.version>
+		<awaitility.version>4.2.0</awaitility.version>
 
-		    <!-- JACOCO -->
+		<!-- JACOCO -->
         <jacoco.version>0.8.8</jacoco.version>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
