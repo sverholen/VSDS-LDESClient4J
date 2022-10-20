@@ -76,6 +76,8 @@ ModelConverter.convertStringToModel(String input, Lang dataSourceFormat);
 
 When called without specifying the `dataSourceFormat`, the value is taken from [LdesClientDefaults](src/main/java/be/vlaanderen/informatievlaanderen/ldes/client/LdesClientDefaults.java).
 
+**Default value**: JSONLD11
+
 ### SDK configuration
 
 
