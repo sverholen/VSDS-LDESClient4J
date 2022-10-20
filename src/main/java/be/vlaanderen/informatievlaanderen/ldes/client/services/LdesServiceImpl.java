@@ -149,14 +149,7 @@ public class LdesServiceImpl implements LdesService {
 	}
 
 	protected Stream<Statement> extractMembers(Model fragmentModel, String fragmentId) {
-		Resource subjectId = fragmentModel
-				.listStatements(ANY_RESOURCE, W3ID_TREE_VIEW, fragmentModel.createResource(fragmentId))
-				.toList()
-				.stream()
-				.findFirst()
-				.map(Statement::getSubject)
-				.orElse(null);
-		StmtIterator memberIterator = fragmentModel.listStatements(subjectId, W3ID_TREE_MEMBER, ANY_RESOURCE);
+		StmtIterator memberIterator = fragmentModel.listStatements(ANY_RESOURCE, W3ID_TREE_MEMBER, ANY_RESOURCE);
 
 		return Stream.iterate(memberIterator, Iterator<Statement>::hasNext, UnaryOperator.identity())
 				.map(Iterator::next);
