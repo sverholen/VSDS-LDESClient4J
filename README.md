@@ -111,16 +111,16 @@ Please refer to the [Jena documentation](https://javadoc.io/doc/org.apache.jena/
 
 Also take into consideration that Jena accepts variants of RDF format names in many cases. It is best practice to use the formal names.
 
-- **CSV**
-- **JSONLD**
-- **N3** (treat as Turtle)
-- **NQUADS** or **NQ**
-- **NTRIPLES** or **NT**
-- **RDFJSON**
-- **RDFNULL**
-- **RDFTHRIFT**
-- **RDFXML**
-- **TRIG**
-- **TRIX**
-- **TSV**
-- **TURTLE** or **TTL**
+##### - **CSV** ([RFC4180](https://www.rfc-editor.org/rfc/rfc4180.html))
+##### - **JSONLD** ([W3C Recommendation 16 July 2020](https://www.w3.org/TR/json-ld11/))
+##### - **N3** (treat as [Turtle](#turtle-or-ttl-rdf-1-1-turtle-w3c-recommendation-25-february-2014-https-www-w3-org-tr-turtle))
+##### - **NQUADS** or **NQ** ([RDF 1.1 N-Quads: W3C Recommendation 25 February 2014](https://www.w3.org/TR/n-quads/))
+##### - **NTRIPLES** or **NT** ([RDF 1.1 N-Triples: W3C Recommendation 25 February 2014](https://www.w3.org/TR/n-triples/))
+##### - **RDFJSON** ([RDF 1.1. JSON Alternate Serialization (RDF/JSON): W3C Working Group Note 07 November 2013](https://www.w3.org/TR/rdf-json/), see also [RDF JSON](https://jena.apache.org/documentation/io/rdf-json.html))
+##### - **RDFNULL** (The "null" language, a sink that prints nothing, usually very efficiently)
+##### - **RDFTHRIFT** ([RDF Binary using Apache Thrift](https://jena.apache.org/documentation/io/rdf-binary.html))
+##### - **RDFXML** ([RDF/XML Syntax Specification (Revised): W3C Recommendation 10 February 2004](https://www.w3.org/TR/REC-rdf-syntax/))
+##### - **TRIG** ([RDF 1.1. Trig: W3C Recommendation 25 February 2014](https://www.w3.org/TR/trig/))
+##### - **TRIX** ([Trix](https://www.w3.org/2004/03/trix/), see also [Trix support in Apache Jena](https://jena.apache.org/documentation/io/trix.html))
+##### - **TSV** ([IANA.org](https://www.iana.org/assignments/media-types/text/tab-separated-values))
+##### - **TURTLE** or **TTL** ([RDF 1.1. Turtle: W3C Recommendation 25 February 2014](https://www.w3.org/TR/turtle/))
