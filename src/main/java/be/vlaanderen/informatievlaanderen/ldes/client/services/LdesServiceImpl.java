@@ -1,11 +1,15 @@
 package be.vlaanderen.informatievlaanderen.ldes.client.services;
 
-import static be.vlaanderen.informatievlaanderen.ldes.client.LdesClientDefaults.DEFAULT_DATA_SOURCE_FORMAT;
-import static be.vlaanderen.informatievlaanderen.ldes.client.LdesClientDefaults.DEFAULT_FRAGMENT_EXPIRATION_INTERVAL;
-import static be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesConstants.W3ID_TREE_MEMBER;
-import static be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesConstants.W3ID_TREE_NODE;
-import static be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesConstants.W3ID_TREE_RELATION;
-import static be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesConstants.W3ID_TREE_VIEW;
+import be.vlaanderen.informatievlaanderen.ldes.client.LdesClientImplFactory;
+import be.vlaanderen.informatievlaanderen.ldes.client.LdesStateManager;
+import be.vlaanderen.informatievlaanderen.ldes.client.converters.LangConverter;
+import be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesFragment;
+import be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesMember;
+import org.apache.jena.graph.TripleBoundary;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.riot.Lang;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -15,23 +19,9 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.jena.graph.TripleBoundary;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelExtract;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StatementTripleBoundary;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.riot.Lang;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import be.vlaanderen.informatievlaanderen.ldes.client.LdesClientImplFactory;
-import be.vlaanderen.informatievlaanderen.ldes.client.LdesStateManager;
-import be.vlaanderen.informatievlaanderen.ldes.client.converters.LangConverter;
-import be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesFragment;
-import be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesMember;
+import static be.vlaanderen.informatievlaanderen.ldes.client.LdesClientDefaults.DEFAULT_DATA_SOURCE_FORMAT;
+import static be.vlaanderen.informatievlaanderen.ldes.client.LdesClientDefaults.DEFAULT_FRAGMENT_EXPIRATION_INTERVAL;
+import static be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesConstants.*;
 
 public class LdesServiceImpl implements LdesService {
 
@@ -63,7 +53,7 @@ public class LdesServiceImpl implements LdesService {
 
 	/**
 	 * Replicates and synchronizes an LDES data set.
-	 *
+	 * <p>
 	 * The defaultExpirationInterval will be set on fragments that do not have a
 	 * value for max-age
 	 * in the Cache-control header.
@@ -125,7 +115,7 @@ public class LdesServiceImpl implements LdesService {
 		LdesFragment fragment = fragmentFetcher.fetchFragment(stateManager.next());
 
 		// Extract and process the members and add them to the fragment
-		extractMembers(fragment.getModel(), fragment.getFragmentId())
+		extractMembers(fragment.getModel())
 				.forEach(memberStatement -> {
 					if (stateManager.shouldProcessMember(fragment, memberStatement.getObject().toString())) {
 						fragment.addMember(processMember(fragment, memberStatement));
@@ -148,7 +138,7 @@ public class LdesServiceImpl implements LdesService {
 		return fragment;
 	}
 
-	protected Stream<Statement> extractMembers(Model fragmentModel, String fragmentId) {
+	protected Stream<Statement> extractMembers(Model fragmentModel) {
 		StmtIterator memberIterator = fragmentModel.listStatements(ANY_RESOURCE, W3ID_TREE_MEMBER, ANY_RESOURCE);
 
 		return Stream.iterate(memberIterator, Iterator<Statement>::hasNext, UnaryOperator.identity())
