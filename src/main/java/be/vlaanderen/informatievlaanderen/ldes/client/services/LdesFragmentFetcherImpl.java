@@ -1,15 +1,11 @@
 package be.vlaanderen.informatievlaanderen.ldes.client.services;
 
-import static java.util.Arrays.stream;
-
-import java.io.IOException;
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.Optional;
-
+import be.vlaanderen.informatievlaanderen.ldes.client.exceptions.UnparseableFragmentException;
+import be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesFragment;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -18,8 +14,12 @@ import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.riot.RiotException;
 
-import be.vlaanderen.informatievlaanderen.ldes.client.exceptions.UnparseableFragmentException;
-import be.vlaanderen.informatievlaanderen.ldes.client.valueobjects.LdesFragment;
+import java.io.IOException;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static java.util.Arrays.stream;
 
 public class LdesFragmentFetcherImpl implements LdesFragmentFetcher {
 
@@ -45,7 +45,10 @@ public class LdesFragmentFetcherImpl implements LdesFragmentFetcher {
 		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
 			HttpClientContext context = HttpClientContext.create();
 
-			HttpResponse httpResponse = httpClient.execute(new HttpGet(fragmentUrl), context);
+			HttpGet request = new HttpGet(fragmentUrl);
+			request.addHeader("Accept", dataSourceFormat.getContentType().toHeaderString());
+
+			HttpResponse httpResponse = httpClient.execute(request, context);
 
 			fragment.setFragmentId(Optional.ofNullable(context.getRedirectLocations())
 					.flatMap(uris -> uris.stream().reduce((uri, uri2) -> uri2))
@@ -73,6 +76,9 @@ public class LdesFragmentFetcherImpl implements LdesFragmentFetcher {
 								fragment.setImmutable(true);
 							}
 						});
+			} else {
+				throw new HttpResponseException(httpResponse.getStatusLine().getStatusCode(),
+						httpResponse.getStatusLine().getReasonPhrase());
 			}
 		} catch (RiotException | IOException e) {
 			throw new UnparseableFragmentException(fragmentUrl, e);
