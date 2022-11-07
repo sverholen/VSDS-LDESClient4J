@@ -48,7 +48,7 @@
         <sonar.projectKey>Informatievlaanderen_VSDS-LDESClient4J</sonar.projectKey>
 
         <!-- CODE FORMATTER -->
-        <formatter-maven-plugin.version>2.20.0</formatter-maven-plugin.version>
+        <formatter-maven-plugin.version>2.21.0</formatter-maven-plugin.version>
         <skipFormatCode>false</skipFormatCode>
     </properties>
 
