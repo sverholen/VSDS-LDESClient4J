@@ -23,7 +23,7 @@
         <integrationtestskip>false</integrationtestskip>
 
         <!-- Jena -->
-        <apache-jena.version>4.6.1</apache-jena.version>
+        <apache-jena.version>4.7.0</apache-jena.version>
 
         <!-- Json -->
         <jakarta-json.version>2.0.1</jakarta-json.version>
